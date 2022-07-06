@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Home Page</h2>
+    <a href="{% url 'password_change' %}">Changer mon mot de passe</a>
+    <p><a href="{% url 'ticket' %}">Créer un ticket</a></p>
+    <p><a href="{% url 'review' %}">Créer une critique</a></p>
+
+
+    <h3>Critiques</h3>
+        <div class="grid-container">
+        {% for review in reviews %}
+            <div class="post">
+                <a href="{% url 'view_review' review.id %}">
+                    <h4>{{ review.headline }}</h4>
+                    <p>{{ review.rating }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <h3>Tickets</h3>
+        <div class="grid-container">
+        {% for ticket in tickets %}
+            <div class="post">
+                <a href="{% url 'view_ticket' ticket.id %}">
+                    <h4>{{ ticket.title }}</h4>
+                    {% if ticket.image %}
+                        <img src="{{ ticket.image.url }}">
+                    {% endif %}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock content %}
+
