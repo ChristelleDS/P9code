@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if perms.reviews.change_review %}
     <h2>Modifier la critique</h2>
     <form method="post">
         {{ edit_form.as_p }}
@@ -13,4 +14,6 @@
         {% csrf_token %}
         <button type="submit" >Supprimer</button>
     </form>
+    <a href="{% url 'photo_upload' %}">Upload a Photo</a>
+{% endif %}
 {% endblock content %}

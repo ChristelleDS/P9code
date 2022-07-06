@@ -4,6 +4,9 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from . import models, forms
+from itertools import chain
+from django.db.models import CharField, Value
+
 
 
 @login_required
@@ -105,3 +108,33 @@ def edit_review(request, review_id):
     }
     return render(request, 'reviews/edit_review.html', context=context)
 
+
+
+@login_required
+def follow_users(request):
+    form = forms.FollowUsersForm(instance=request.user)
+    if request.method == 'POST':
+        form = forms.FollowUsersForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    return render(request, 'reviews/follow_users_form.html', context={'form': form})
+
+
+@login_required
+def feed(request):
+    reviews = get_users_viewable_reviews(request.user)
+    # returns queryset of reviews
+    reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
+
+    tickets = get_users_viewable_tickets(request.user)
+    # returns queryset of tickets
+    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+
+    # combine and sort the two types of posts
+    posts = sorted(
+        chain(reviews, tickets),
+        key=lambda post: post.time_created,
+        reverse=True
+    )
+    return render(request, 'feed.html', context={'posts': posts})

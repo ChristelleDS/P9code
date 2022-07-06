@@ -19,14 +19,14 @@
         <div class="row">
             <header>
                 <nav class="navbar-expand navbar">
-                    <a class="navbar-brand col-4 text-center" href="{% url 'home' %}">LITReview</a>
-                    <div class="collapse navbar-collapse col" id="navbarSupportedContent">
+                    <a class="navbar-brand col text-center" href="{% url 'home' %}">LITReview</a>
+                    <div class="collapse navbar-collapse col flex-content-right" id="navbarSupportedContent">
                         <ul class="nav nav-pills flex-column flex-md-row">
                           <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Flux</a>
                           </li>
                           <li class="nav-item"><a class="nav-link" href="#">Posts</a></li>
-                          <li class="nav-item"><a class="nav-link" href="#">Abonnements</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'follow_users' %}">Abonnements</a></li>
                           <li class="nav-item dropdown">
                               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                                  data-bs-toggle="dropdown" aria-expanded="false">
